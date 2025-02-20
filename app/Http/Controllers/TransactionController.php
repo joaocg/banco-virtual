@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\DepositRequest;
 use App\Http\Requests\TransferRequest;
+use App\Models\Account;
 use App\Models\User;
 use App\Services\TransactionService;
 use Illuminate\Http\JsonResponse;
@@ -45,12 +46,12 @@ class TransactionController extends Controller
      */
     public function transfer(TransferRequest $request)
     {
-        dd('Chegou');
-//        $sender = auth()->user();
+        $sender = auth()->user();
 
         $senderAccount = $sender->account;
+        $account = Account::where('account_number', $request->receiver_account)->firstOrFail();;
 
-        $receiver = User::findOrFail($request->receiver_id);
+        $receiver = User::findOrFail($account->user_id);
 
         $receiverAccount = $receiver->account;
 

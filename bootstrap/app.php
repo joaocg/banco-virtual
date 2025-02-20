@@ -18,7 +18,8 @@ return Application::configure(basePath: dirname(__DIR__))
         $exceptions->shouldRenderJsonWhen(function (Request $request, Throwable $e) {
             if ($request->is('deposit') ||
                 $request->is('transfer') ||
-                $request->is('transaction')) {
+                $request->is('transaction') ||
+                $request->is('account-data')) {
                 return true;
             }
 
